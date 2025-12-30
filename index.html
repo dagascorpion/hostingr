@@ -1,0 +1,1641 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_d9dbfa54295de6554696a7a9f4b9833a {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+    <script src="https://cdn.jsdelivr.net/gh/python-visualization/folium@main/folium/templates/leaflet_heat.min.js"></script>
+</head>
+<body>
+    
+    
+    <div style="
+        position: fixed;
+        bottom: 50px;
+        left: 50px;
+        width: 280px;
+        height: auto;
+        background-color: white;
+        border:2px solid grey;
+        z-index:9999;
+        font-size:14px;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0 0 15px rgba(0,0,0,0.2);
+        ">
+        <h4 style="margin-top: 0; color: #333;">Niveles de Riesgo</h4>
+        <p style="margin: 5px 0;"><span style="background-color: #00FF00; padding: 2px 10px; border-radius: 3px;">■</span> BAJO</p>
+        <p style="margin: 5px 0;"><span style="background-color: #90EE90; padding: 2px 10px; border-radius: 3px;">■</span> MEDIO-BAJO</p>
+        <p style="margin: 5px 0;"><span style="background-color: #FFFF00; padding: 2px 10px; border-radius: 3px;">■</span> MEDIO</p>
+        <p style="margin: 5px 0;"><span style="background-color: #FFA500; padding: 2px 10px; border-radius: 3px;">■</span> MEDIO-ALTO</p>
+        <p style="margin: 5px 0;"><span style="background-color: #FF6600; padding: 2px 10px; border-radius: 3px;">■</span> ALTO</p>
+        <p style="margin: 5px 0;"><span style="background-color: #FF0000; padding: 2px 10px; border-radius: 3px;">■</span> CRÍTICO</p>
+        <hr style="margin: 10px 0;">
+        <p style="font-size: 11px; color: #666; margin: 5px 0;">
+            <b>Fecha:</b> 30/12/2025 19:43<br>
+            <b>Fuente:</b> SPAV Rionegro<br>
+            <b>Zonas analizadas:</b> 5
+        </p>
+    </div>
+    
+    
+    <div style="
+        position: fixed;
+        top: 80px;
+        right: 20px;
+        width: 320px;
+        background-color: white;
+        border:2px solid grey;
+        z-index:9999;
+        font-size:13px;
+        padding: 15px;
+        border-radius: 5px;
+        box-shadow: 0 0 15px rgba(0,0,0,0.2);
+        max-height: 80vh;
+        overflow-y: auto;
+        ">
+        <h3 style="margin-top: 0; color: #333; border-bottom: 2px solid #333; padding-bottom: 5px;">
+            📊 Estadísticas Generales
+        </h3>
+
+        <h4 style="color: #555; margin-top: 15px;">Resumen Global</h4>
+        <p style="margin: 5px 0;"><b>Total zonas críticas:</b> 5</p>
+        <p style="margin: 5px 0;"><b>Menciones en fuentes:</b> 24</p>
+        <p style="margin: 5px 0;"><b>Prob. accidente promedio:</b> 53%</p>
+        <p style="margin: 5px 0;"><b>Frecuencia promedio:</b> 1.2</p>
+
+        <h4 style="color: #d9534f; margin-top: 15px;">⚠️ Zona de Mayor Riesgo</h4>
+        <p style="margin: 5px 0; background-color: #ffebee; padding: 8px; border-radius: 3px;">
+            <b>Las Palmas</b><br>
+            Nivel: <b style="color: #d9534f;">ALTO</b><br>
+            Prob: 69% |
+            Frec: 2.1<br>
+            Gravedad: 0.76
+        </p>
+
+        <h4 style="color: #555; margin-top: 15px;">Ranking de Zonas</h4>
+        <ol style="padding-left: 20px; margin: 5px 0;">
+    
+            <li style="margin: 5px 0;">
+                <b>Las Palmas</b><br>
+                <span style="color: #FF0000; font-size: 11px;">
+                    ALTO | Prob: 69%
+                </span>
+            </li>
+        
+            <li style="margin: 5px 0;">
+                <b>Aeropuerto JMC</b><br>
+                <span style="color: #FF6600; font-size: 11px;">
+                    MEDIO-ALTO | Prob: 60%
+                </span>
+            </li>
+        
+            <li style="margin: 5px 0;">
+                <b>Corredor Pintuco</b><br>
+                <span style="color: #FFA500; font-size: 11px;">
+                    MEDIO | Prob: 52%
+                </span>
+            </li>
+        
+            <li style="margin: 5px 0;">
+                <b>Centro Urbano</b><br>
+                <span style="color: #90EE90; font-size: 11px;">
+                    MEDIO | Prob: 44%
+                </span>
+            </li>
+        
+            <li style="margin: 5px 0;">
+                <b>Zona E</b><br>
+                <span style="color: #FFFF00; font-size: 11px;">
+                    MEDIO-BAJO | Prob: 39%
+                </span>
+            </li>
+        
+        </ol>
+
+        <hr style="margin: 15px 0;">
+        <p style="font-size: 11px; color: #666; margin: 5px 0;">
+            <b>Sistema:</b> SPAV - Sistema de Predicción de Accidentalidad Vial<br>
+            <b>Municipio:</b> Rionegro, Antioquia<br>
+            <b>Última actualización:</b> 30/12/2025 19:43
+        </p>
+    </div>
+    
+    
+    <div style="
+        position: fixed;
+        top: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 600px;
+        background-color: rgba(255, 255, 255, 0.95);
+        border:2px solid #333;
+        z-index:9999;
+        font-size:16px;
+        padding: 15px;
+        border-radius: 5px;
+        box-shadow: 0 0 15px rgba(0,0,0,0.3);
+        text-align: center;
+        ">
+        <h2 style="margin: 0; color: #333;">
+            🗺️ Mapa de Calor de Riesgo Vial - Rionegro
+        </h2>
+        <p style="margin: 5px 0; font-size: 13px; color: #666;">
+            Sistema de Predicción de Accidentalidad Vial (SPAV)
+        </p>
+    </div>
+    
+    
+            <div class="folium-map" id="map_d9dbfa54295de6554696a7a9f4b9833a" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_d9dbfa54295de6554696a7a9f4b9833a = L.map(
+                "map_d9dbfa54295de6554696a7a9f4b9833a",
+                {
+                    center: [6.155, -75.373],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 13,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+            L.control.scale().addTo(map_d9dbfa54295de6554696a7a9f4b9833a);
+
+            
+
+        
+    
+            var tile_layer_3b652c0764d0c9a98acc5cc098c0deba = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_3b652c0764d0c9a98acc5cc098c0deba.addTo(map_d9dbfa54295de6554696a7a9f4b9833a);
+        
+    
+            var tile_layer_05bb34d5e1b1b8571aae47fdefa7491f = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abcd",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_05bb34d5e1b1b8571aae47fdefa7491f.addTo(map_d9dbfa54295de6554696a7a9f4b9833a);
+        
+    
+            var tile_layer_e05ddca41b0442db107462bf5716d38b = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abcd",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_e05ddca41b0442db107462bf5716d38b.addTo(map_d9dbfa54295de6554696a7a9f4b9833a);
+        
+    
+            var circle_7e10ed5af644e9b87330e53028083973 = L.circle(
+                [6.15, -75.375],
+                {"bubblingMouseEvents": true, "color": "#FFA500", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FFA500", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 1500, "stroke": true, "weight": 2}
+            ).addTo(map_d9dbfa54295de6554696a7a9f4b9833a);
+        
+    
+        var popup_a6d436c71830f4010eea65e1c220a73d = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_fdf34609b3816c21176c96375937e30c = $(`<div id="html_fdf34609b3816c21176c96375937e30c" style="width: 100.0%; height: 100.0%;">                 <div style="font-family: Arial; width: 300px;">                     <h4 style="color: #FFA500; margin-bottom: 10px;">Corredor Pintuco</h4>                     <hr>                     <p><b>Nivel de Riesgo:</b> <span style="color: #FFA500; font-weight: bold;">MEDIO</span></p>                     <p><b>Probabilidad Accidente:</b> 52%</p>                     <p><b>Frecuencia Esperada:</b> 1.0 accidentes</p>                     <p><b>Índice Gravedad:</b> 0.36</p>                     <p><b>TPD:</b> 18,000 veh/día</p>                     <p><b>Menciones en fuentes:</b> 2</p>                     <hr>                     <p style="font-size: 11px;">Zona Vial Segura. Alto volumen de motos (42%). Estado pavimento regular.</p>                 </div>             </div>`)[0];
+                popup_a6d436c71830f4010eea65e1c220a73d.setContent(html_fdf34609b3816c21176c96375937e30c);
+            
+        
+
+        circle_7e10ed5af644e9b87330e53028083973.bindPopup(popup_a6d436c71830f4010eea65e1c220a73d)
+        ;
+
+        
+    
+    
+            circle_7e10ed5af644e9b87330e53028083973.bindTooltip(
+                `<div>
+                     Corredor Pintuco - MEDIO
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_ef60e0ce947be5a4f145983e11597325 = L.marker(
+                [6.15, -75.375],
+                {
+}
+            ).addTo(map_d9dbfa54295de6554696a7a9f4b9833a);
+        
+    
+            var icon_56473101b80556cb855e4b79bf65a321 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_0e2acbfb4835f9e03bebd13606361b15 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_3630c7adeb1ae1eed3f0d610e589d619 = $(`<div id="html_3630c7adeb1ae1eed3f0d610e589d619" style="width: 100.0%; height: 100.0%;"><b>Corredor Pintuco</b><br>Riesgo: MEDIO</div>`)[0];
+                popup_0e2acbfb4835f9e03bebd13606361b15.setContent(html_3630c7adeb1ae1eed3f0d610e589d619);
+            
+        
+
+        marker_ef60e0ce947be5a4f145983e11597325.bindPopup(popup_0e2acbfb4835f9e03bebd13606361b15)
+        ;
+
+        
+    
+    
+            marker_ef60e0ce947be5a4f145983e11597325.bindTooltip(
+                `<div>
+                     Corredor Pintuco
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_ef60e0ce947be5a4f145983e11597325.setIcon(icon_56473101b80556cb855e4b79bf65a321);
+            
+    
+            var circle_79645055d2714628e807340233ea7f00 = L.circle(
+                [6.145, -75.365],
+                {"bubblingMouseEvents": true, "color": "#FFFF00", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FFFF00", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 1200, "stroke": true, "weight": 2}
+            ).addTo(map_d9dbfa54295de6554696a7a9f4b9833a);
+        
+    
+        var popup_d01ea911f9d49daeb87ca7e20a02184d = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_462c6bbcfc770ef9871ed2d8054d1332 = $(`<div id="html_462c6bbcfc770ef9871ed2d8054d1332" style="width: 100.0%; height: 100.0%;">                 <div style="font-family: Arial; width: 300px;">                     <h4 style="color: #FFFF00; margin-bottom: 10px;">Zona E</h4>                     <hr>                     <p><b>Nivel de Riesgo:</b> <span style="color: #FFFF00; font-weight: bold;">MEDIO-BAJO</span></p>                     <p><b>Probabilidad Accidente:</b> 39%</p>                     <p><b>Frecuencia Esperada:</b> 0.6 accidentes</p>                     <p><b>Índice Gravedad:</b> 0.30</p>                     <p><b>TPD:</b> 12,000 veh/día</p>                     <p><b>Menciones en fuentes:</b> 3</p>                     <hr>                     <p style="font-size: 11px;">Zona Vial Segura reciente (2023). Infraestructura moderna. Intersecciones sin semaforizar.</p>                 </div>             </div>`)[0];
+                popup_d01ea911f9d49daeb87ca7e20a02184d.setContent(html_462c6bbcfc770ef9871ed2d8054d1332);
+            
+        
+
+        circle_79645055d2714628e807340233ea7f00.bindPopup(popup_d01ea911f9d49daeb87ca7e20a02184d)
+        ;
+
+        
+    
+    
+            circle_79645055d2714628e807340233ea7f00.bindTooltip(
+                `<div>
+                     Zona E - MEDIO-BAJO
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_c3f2f0f1be8a8264812e4a0bf437b9dd = L.marker(
+                [6.145, -75.365],
+                {
+}
+            ).addTo(map_d9dbfa54295de6554696a7a9f4b9833a);
+        
+    
+            var icon_5738adab89c38d4e765eaa990b780713 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_0f03b7e69fc852fbeac488638c478748 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_ae3c85f7112f14770a4ac595aa10530a = $(`<div id="html_ae3c85f7112f14770a4ac595aa10530a" style="width: 100.0%; height: 100.0%;"><b>Zona E</b><br>Riesgo: MEDIO-BAJO</div>`)[0];
+                popup_0f03b7e69fc852fbeac488638c478748.setContent(html_ae3c85f7112f14770a4ac595aa10530a);
+            
+        
+
+        marker_c3f2f0f1be8a8264812e4a0bf437b9dd.bindPopup(popup_0f03b7e69fc852fbeac488638c478748)
+        ;
+
+        
+    
+    
+            marker_c3f2f0f1be8a8264812e4a0bf437b9dd.bindTooltip(
+                `<div>
+                     Zona E
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_c3f2f0f1be8a8264812e4a0bf437b9dd.setIcon(icon_5738adab89c38d4e765eaa990b780713);
+            
+    
+            var circle_7d86f86edcbda18734acfbdbaf0c1575 = L.circle(
+                [6.18, -75.42],
+                {"bubblingMouseEvents": true, "color": "#FF0000", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF0000", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6000, "stroke": true, "weight": 2}
+            ).addTo(map_d9dbfa54295de6554696a7a9f4b9833a);
+        
+    
+        var popup_338e8f070671cc01c21220194927bf02 = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_d695a7d2c8951196f0736bc57c9af31c = $(`<div id="html_d695a7d2c8951196f0736bc57c9af31c" style="width: 100.0%; height: 100.0%;">                 <div style="font-family: Arial; width: 300px;">                     <h4 style="color: #FF0000; margin-bottom: 10px;">Las Palmas</h4>                     <hr>                     <p><b>Nivel de Riesgo:</b> <span style="color: #FF0000; font-weight: bold;">ALTO</span></p>                     <p><b>Probabilidad Accidente:</b> 69%</p>                     <p><b>Frecuencia Esperada:</b> 2.1 accidentes</p>                     <p><b>Índice Gravedad:</b> 0.76</p>                     <p><b>TPD:</b> 35,000 veh/día</p>                     <p><b>Menciones en fuentes:</b> 6</p>                     <hr>                     <p style="font-size: 11px;">390 accidentes en 2024. Tasa fatalidad 23%. Velocidad 80-100 km/h. Geometría exigente.</p>                 </div>             </div>`)[0];
+                popup_338e8f070671cc01c21220194927bf02.setContent(html_d695a7d2c8951196f0736bc57c9af31c);
+            
+        
+
+        circle_7d86f86edcbda18734acfbdbaf0c1575.bindPopup(popup_338e8f070671cc01c21220194927bf02)
+        ;
+
+        
+    
+    
+            circle_7d86f86edcbda18734acfbdbaf0c1575.bindTooltip(
+                `<div>
+                     Las Palmas - ALTO
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_0aa464be7697fe28af28e380d2640bbd = L.marker(
+                [6.18, -75.42],
+                {
+}
+            ).addTo(map_d9dbfa54295de6554696a7a9f4b9833a);
+        
+    
+            var icon_f4f8f4631504f539b8af7dffdccf62c3 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_1f9a21f47d8698da12434a36cf0f030e = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_1e70264c0970e9a64ed2e31de83063b5 = $(`<div id="html_1e70264c0970e9a64ed2e31de83063b5" style="width: 100.0%; height: 100.0%;"><b>Las Palmas</b><br>Riesgo: ALTO</div>`)[0];
+                popup_1f9a21f47d8698da12434a36cf0f030e.setContent(html_1e70264c0970e9a64ed2e31de83063b5);
+            
+        
+
+        marker_0aa464be7697fe28af28e380d2640bbd.bindPopup(popup_1f9a21f47d8698da12434a36cf0f030e)
+        ;
+
+        
+    
+    
+            marker_0aa464be7697fe28af28e380d2640bbd.bindTooltip(
+                `<div>
+                     Las Palmas
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_0aa464be7697fe28af28e380d2640bbd.setIcon(icon_f4f8f4631504f539b8af7dffdccf62c3);
+            
+    
+            var circle_4a181d0d57638d5921dc8807f2a27595 = L.circle(
+                [6.165, -75.423],
+                {"bubblingMouseEvents": true, "color": "#FF6600", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#FF6600", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 4000, "stroke": true, "weight": 2}
+            ).addTo(map_d9dbfa54295de6554696a7a9f4b9833a);
+        
+    
+        var popup_be1c786dd9d3c1a37cd8978b75797ed7 = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_9fd5f2087138dcb9cc30d4df4a4d144c = $(`<div id="html_9fd5f2087138dcb9cc30d4df4a4d144c" style="width: 100.0%; height: 100.0%;">                 <div style="font-family: Arial; width: 300px;">                     <h4 style="color: #FF6600; margin-bottom: 10px;">Aeropuerto JMC</h4>                     <hr>                     <p><b>Nivel de Riesgo:</b> <span style="color: #FF6600; font-weight: bold;">MEDIO-ALTO</span></p>                     <p><b>Probabilidad Accidente:</b> 60%</p>                     <p><b>Frecuencia Esperada:</b> 1.5 accidentes</p>                     <p><b>Índice Gravedad:</b> 0.57</p>                     <p><b>TPD:</b> 28,000 veh/día</p>                     <p><b>Menciones en fuentes:</b> 12</p>                     <hr>                     <p style="font-size: 11px;">Zona más mencionada (12). Conductores no familiarizados. Prisa por vuelo.</p>                 </div>             </div>`)[0];
+                popup_be1c786dd9d3c1a37cd8978b75797ed7.setContent(html_9fd5f2087138dcb9cc30d4df4a4d144c);
+            
+        
+
+        circle_4a181d0d57638d5921dc8807f2a27595.bindPopup(popup_be1c786dd9d3c1a37cd8978b75797ed7)
+        ;
+
+        
+    
+    
+            circle_4a181d0d57638d5921dc8807f2a27595.bindTooltip(
+                `<div>
+                     Aeropuerto JMC - MEDIO-ALTO
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_8caac89dce35450ed4cadf19d30f1a9d = L.marker(
+                [6.165, -75.423],
+                {
+}
+            ).addTo(map_d9dbfa54295de6554696a7a9f4b9833a);
+        
+    
+            var icon_3fd562e2761fcbaf361fcba9722fb2c1 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_2ee676b39a084f0cb587addc21a5073c = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_479de18e2696763b390122c82ffb15d5 = $(`<div id="html_479de18e2696763b390122c82ffb15d5" style="width: 100.0%; height: 100.0%;"><b>Aeropuerto JMC</b><br>Riesgo: MEDIO-ALTO</div>`)[0];
+                popup_2ee676b39a084f0cb587addc21a5073c.setContent(html_479de18e2696763b390122c82ffb15d5);
+            
+        
+
+        marker_8caac89dce35450ed4cadf19d30f1a9d.bindPopup(popup_2ee676b39a084f0cb587addc21a5073c)
+        ;
+
+        
+    
+    
+            marker_8caac89dce35450ed4cadf19d30f1a9d.bindTooltip(
+                `<div>
+                     Aeropuerto JMC
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_8caac89dce35450ed4cadf19d30f1a9d.setIcon(icon_3fd562e2761fcbaf361fcba9722fb2c1);
+            
+    
+            var circle_2702d62899245283e191df7fff3c7196 = L.circle(
+                [6.155, -75.373],
+                {"bubblingMouseEvents": true, "color": "#90EE90", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "#90EE90", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 2000, "stroke": true, "weight": 2}
+            ).addTo(map_d9dbfa54295de6554696a7a9f4b9833a);
+        
+    
+        var popup_380a973e629bd1ec1c65f15b7f634e94 = L.popup({
+  "maxWidth": 350,
+});
+
+        
+            
+                var html_d03dc280a28251407c6639f115e0e095 = $(`<div id="html_d03dc280a28251407c6639f115e0e095" style="width: 100.0%; height: 100.0%;">                 <div style="font-family: Arial; width: 300px;">                     <h4 style="color: #90EE90; margin-bottom: 10px;">Centro Urbano</h4>                     <hr>                     <p><b>Nivel de Riesgo:</b> <span style="color: #90EE90; font-weight: bold;">MEDIO</span></p>                     <p><b>Probabilidad Accidente:</b> 44%</p>                     <p><b>Frecuencia Esperada:</b> 0.8 accidentes</p>                     <p><b>Índice Gravedad:</b> 0.20</p>                     <p><b>TPD:</b> 15,000 veh/día</p>                     <p><b>Menciones en fuentes:</b> 1</p>                     <hr>                     <p style="font-size: 11px;">Alta densidad peatonal. Velocidad 30-40 km/h. Tasa fatalidad 3% (la más baja).</p>                 </div>             </div>`)[0];
+                popup_380a973e629bd1ec1c65f15b7f634e94.setContent(html_d03dc280a28251407c6639f115e0e095);
+            
+        
+
+        circle_2702d62899245283e191df7fff3c7196.bindPopup(popup_380a973e629bd1ec1c65f15b7f634e94)
+        ;
+
+        
+    
+    
+            circle_2702d62899245283e191df7fff3c7196.bindTooltip(
+                `<div>
+                     Centro Urbano - MEDIO
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_ee804603839512819635b2ee6362fb09 = L.marker(
+                [6.155, -75.373],
+                {
+}
+            ).addTo(map_d9dbfa54295de6554696a7a9f4b9833a);
+        
+    
+            var icon_4b7080c4cb7e8813e76622bc1d9dc832 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_e92da1ccf5b680f6f5327214d73342d8 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_7770b9b4f3f168fc1519a3384bdeabf4 = $(`<div id="html_7770b9b4f3f168fc1519a3384bdeabf4" style="width: 100.0%; height: 100.0%;"><b>Centro Urbano</b><br>Riesgo: MEDIO</div>`)[0];
+                popup_e92da1ccf5b680f6f5327214d73342d8.setContent(html_7770b9b4f3f168fc1519a3384bdeabf4);
+            
+        
+
+        marker_ee804603839512819635b2ee6362fb09.bindPopup(popup_e92da1ccf5b680f6f5327214d73342d8)
+        ;
+
+        
+    
+    
+            marker_ee804603839512819635b2ee6362fb09.bindTooltip(
+                `<div>
+                     Centro Urbano
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_ee804603839512819635b2ee6362fb09.setIcon(icon_4b7080c4cb7e8813e76622bc1d9dc832);
+            
+    
+            var marker_477a1bf2886ab542bd788ba4ed99ae18 = L.marker(
+                [6.148, -75.373],
+                {
+}
+            ).addTo(map_d9dbfa54295de6554696a7a9f4b9833a);
+        
+    
+            var icon_022b64efd7a5ac32ee24f3d586c531bc = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "warning-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_2b27a18ea42b5dedfd4374c0cace4233 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_9c9812bc657a78970dd50d72ae7d6694 = $(`<div id="html_9c9812bc657a78970dd50d72ae7d6694" style="width: 100.0%; height: 100.0%;">                     <div style="font-family: Arial; width: 250px;">                         <h5 style="color: orange;">Intersección Belén</h5>                         <p><b>Zona:</b> Corredor Pintuco</p>                         <p><b>Nivel de Riesgo:</b> 3.0 / 4.0</p>                         <p style="font-size: 11px; color: #666;">Punto crítico identificado</p>                     </div>                 </div>`)[0];
+                popup_2b27a18ea42b5dedfd4374c0cace4233.setContent(html_9c9812bc657a78970dd50d72ae7d6694);
+            
+        
+
+        marker_477a1bf2886ab542bd788ba4ed99ae18.bindPopup(popup_2b27a18ea42b5dedfd4374c0cace4233)
+        ;
+
+        
+    
+    
+            marker_477a1bf2886ab542bd788ba4ed99ae18.bindTooltip(
+                `<div>
+                     Intersección Belén (Riesgo: 3.0)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_477a1bf2886ab542bd788ba4ed99ae18.setIcon(icon_022b64efd7a5ac32ee24f3d586c531bc);
+            
+    
+            var marker_6fc89ed0fe873f27c406cfed9bc960b7 = L.marker(
+                [6.151, -75.376],
+                {
+}
+            ).addTo(map_d9dbfa54295de6554696a7a9f4b9833a);
+        
+    
+            var icon_3dcf3efb21dc1a3022bfdc5b11828718 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "warning-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_6355cdc966efdc0d4ea0676284cc451f = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_86500cf228545e54ee1c0289389cbe72 = $(`<div id="html_86500cf228545e54ee1c0289389cbe72" style="width: 100.0%; height: 100.0%;">                     <div style="font-family: Arial; width: 250px;">                         <h5 style="color: orange;">Sector Comercial</h5>                         <p><b>Zona:</b> Corredor Pintuco</p>                         <p><b>Nivel de Riesgo:</b> 2.8 / 4.0</p>                         <p style="font-size: 11px; color: #666;">Punto crítico identificado</p>                     </div>                 </div>`)[0];
+                popup_6355cdc966efdc0d4ea0676284cc451f.setContent(html_86500cf228545e54ee1c0289389cbe72);
+            
+        
+
+        marker_6fc89ed0fe873f27c406cfed9bc960b7.bindPopup(popup_6355cdc966efdc0d4ea0676284cc451f)
+        ;
+
+        
+    
+    
+            marker_6fc89ed0fe873f27c406cfed9bc960b7.bindTooltip(
+                `<div>
+                     Sector Comercial (Riesgo: 2.8)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_6fc89ed0fe873f27c406cfed9bc960b7.setIcon(icon_3dcf3efb21dc1a3022bfdc5b11828718);
+            
+    
+            var marker_1598c56ab69827c28a28831167da1044 = L.marker(
+                [6.152, -75.377],
+                {
+}
+            ).addTo(map_d9dbfa54295de6554696a7a9f4b9833a);
+        
+    
+            var icon_ddcb6ac35e1de683dde2b61eb78576ee = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "warning-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_867bbc0bd02082f67dbe4f1d8f14e2fd = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_2749ae9d54b9c3d80d2846e65e4d1b84 = $(`<div id="html_2749ae9d54b9c3d80d2846e65e4d1b84" style="width: 100.0%; height: 100.0%;">                     <div style="font-family: Arial; width: 250px;">                         <h5 style="color: orange;">Acceso Fiscalía</h5>                         <p><b>Zona:</b> Corredor Pintuco</p>                         <p><b>Nivel de Riesgo:</b> 2.5 / 4.0</p>                         <p style="font-size: 11px; color: #666;">Punto crítico identificado</p>                     </div>                 </div>`)[0];
+                popup_867bbc0bd02082f67dbe4f1d8f14e2fd.setContent(html_2749ae9d54b9c3d80d2846e65e4d1b84);
+            
+        
+
+        marker_1598c56ab69827c28a28831167da1044.bindPopup(popup_867bbc0bd02082f67dbe4f1d8f14e2fd)
+        ;
+
+        
+    
+    
+            marker_1598c56ab69827c28a28831167da1044.bindTooltip(
+                `<div>
+                     Acceso Fiscalía (Riesgo: 2.5)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_1598c56ab69827c28a28831167da1044.setIcon(icon_ddcb6ac35e1de683dde2b61eb78576ee);
+            
+    
+            var marker_37f940f5d3ab5a569b865c4ff3e7642b = L.marker(
+                [6.143, -75.363],
+                {
+}
+            ).addTo(map_d9dbfa54295de6554696a7a9f4b9833a);
+        
+    
+            var icon_4e54a6ba8a7426fad58b5108a4d1cb5d = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "warning-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_97a9bfe13046ba9861eb2c7720adc867 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_4e5d79b0b71c7f0082892fde229fa717 = $(`<div id="html_4e5d79b0b71c7f0082892fde229fa717" style="width: 100.0%; height: 100.0%;">                     <div style="font-family: Arial; width: 250px;">                         <h5 style="color: orange;">Intersección sin semáforo 1</h5>                         <p><b>Zona:</b> Zona E</p>                         <p><b>Nivel de Riesgo:</b> 2.5 / 4.0</p>                         <p style="font-size: 11px; color: #666;">Punto crítico identificado</p>                     </div>                 </div>`)[0];
+                popup_97a9bfe13046ba9861eb2c7720adc867.setContent(html_4e5d79b0b71c7f0082892fde229fa717);
+            
+        
+
+        marker_37f940f5d3ab5a569b865c4ff3e7642b.bindPopup(popup_97a9bfe13046ba9861eb2c7720adc867)
+        ;
+
+        
+    
+    
+            marker_37f940f5d3ab5a569b865c4ff3e7642b.bindTooltip(
+                `<div>
+                     Intersección sin semáforo 1 (Riesgo: 2.5)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_37f940f5d3ab5a569b865c4ff3e7642b.setIcon(icon_4e54a6ba8a7426fad58b5108a4d1cb5d);
+            
+    
+            var marker_08ae32c21e32eb873aecffe3a586c544 = L.marker(
+                [6.146, -75.366],
+                {
+}
+            ).addTo(map_d9dbfa54295de6554696a7a9f4b9833a);
+        
+    
+            var icon_9c228f525c3fde3a40acdaf090526a4d = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "lightgreen",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_4e690ae1532bedcc6c218308fa5978b4 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_60e9908db81183cb3bd1b6db5a79a344 = $(`<div id="html_60e9908db81183cb3bd1b6db5a79a344" style="width: 100.0%; height: 100.0%;">                     <div style="font-family: Arial; width: 250px;">                         <h5 style="color: lightgreen;">Intersección sin semáforo 2</h5>                         <p><b>Zona:</b> Zona E</p>                         <p><b>Nivel de Riesgo:</b> 2.4 / 4.0</p>                         <p style="font-size: 11px; color: #666;">Punto crítico identificado</p>                     </div>                 </div>`)[0];
+                popup_4e690ae1532bedcc6c218308fa5978b4.setContent(html_60e9908db81183cb3bd1b6db5a79a344);
+            
+        
+
+        marker_08ae32c21e32eb873aecffe3a586c544.bindPopup(popup_4e690ae1532bedcc6c218308fa5978b4)
+        ;
+
+        
+    
+    
+            marker_08ae32c21e32eb873aecffe3a586c544.bindTooltip(
+                `<div>
+                     Intersección sin semáforo 2 (Riesgo: 2.4)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_08ae32c21e32eb873aecffe3a586c544.setIcon(icon_9c228f525c3fde3a40acdaf090526a4d);
+            
+    
+            var marker_f82f44de64bf69e8e9cf1d1f46487961 = L.marker(
+                [6.147, -75.367],
+                {
+}
+            ).addTo(map_d9dbfa54295de6554696a7a9f4b9833a);
+        
+    
+            var icon_9c0f0a87ec33f6428933eac06702dec1 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "lightgreen",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_0cc7821be977701c3e8d7e5bc95d9272 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_fd43ed6b7ee59042c483b871a3fbde3c = $(`<div id="html_fd43ed6b7ee59042c483b871a3fbde3c" style="width: 100.0%; height: 100.0%;">                     <div style="font-family: Arial; width: 250px;">                         <h5 style="color: lightgreen;">Zona Residencial</h5>                         <p><b>Zona:</b> Zona E</p>                         <p><b>Nivel de Riesgo:</b> 1.8 / 4.0</p>                         <p style="font-size: 11px; color: #666;">Punto crítico identificado</p>                     </div>                 </div>`)[0];
+                popup_0cc7821be977701c3e8d7e5bc95d9272.setContent(html_fd43ed6b7ee59042c483b871a3fbde3c);
+            
+        
+
+        marker_f82f44de64bf69e8e9cf1d1f46487961.bindPopup(popup_0cc7821be977701c3e8d7e5bc95d9272)
+        ;
+
+        
+    
+    
+            marker_f82f44de64bf69e8e9cf1d1f46487961.bindTooltip(
+                `<div>
+                     Zona Residencial (Riesgo: 1.8)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_f82f44de64bf69e8e9cf1d1f46487961.setIcon(icon_9c0f0a87ec33f6428933eac06702dec1);
+            
+    
+            var marker_0f609b4c972fec01cac821ddf14b6c25 = L.marker(
+                [6.175, -75.415],
+                {
+}
+            ).addTo(map_d9dbfa54295de6554696a7a9f4b9833a);
+        
+    
+            var icon_3b03ae6391b5704ff0b226a94e17042c = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "exclamation-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_bd2435ae82fa9aa6ebf0a1829326871d = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_6cc6278dad9c701eee97005b9362d05e = $(`<div id="html_6cc6278dad9c701eee97005b9362d05e" style="width: 100.0%; height: 100.0%;">                     <div style="font-family: Arial; width: 250px;">                         <h5 style="color: red;">Curva Peligrosa Km 5</h5>                         <p><b>Zona:</b> Las Palmas</p>                         <p><b>Nivel de Riesgo:</b> 4.0 / 4.0</p>                         <p style="font-size: 11px; color: #666;">Punto crítico identificado</p>                     </div>                 </div>`)[0];
+                popup_bd2435ae82fa9aa6ebf0a1829326871d.setContent(html_6cc6278dad9c701eee97005b9362d05e);
+            
+        
+
+        marker_0f609b4c972fec01cac821ddf14b6c25.bindPopup(popup_bd2435ae82fa9aa6ebf0a1829326871d)
+        ;
+
+        
+    
+    
+            marker_0f609b4c972fec01cac821ddf14b6c25.bindTooltip(
+                `<div>
+                     Curva Peligrosa Km 5 (Riesgo: 4.0)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_0f609b4c972fec01cac821ddf14b6c25.setIcon(icon_3b03ae6391b5704ff0b226a94e17042c);
+            
+    
+            var marker_f54dbcae77ace8527a816665bf48383c = L.marker(
+                [6.182, -75.422],
+                {
+}
+            ).addTo(map_d9dbfa54295de6554696a7a9f4b9833a);
+        
+    
+            var icon_86e3f2407fcc14288f141ddc2e64eda8 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "exclamation-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_cbe748f6da2ee4dbd35f90e0ad523623 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_023f8560062d6a1d444d90b30ebbe8d4 = $(`<div id="html_023f8560062d6a1d444d90b30ebbe8d4" style="width: 100.0%; height: 100.0%;">                     <div style="font-family: Arial; width: 250px;">                         <h5 style="color: red;">Sector Niebla Frecuente</h5>                         <p><b>Zona:</b> Las Palmas</p>                         <p><b>Nivel de Riesgo:</b> 3.9 / 4.0</p>                         <p style="font-size: 11px; color: #666;">Punto crítico identificado</p>                     </div>                 </div>`)[0];
+                popup_cbe748f6da2ee4dbd35f90e0ad523623.setContent(html_023f8560062d6a1d444d90b30ebbe8d4);
+            
+        
+
+        marker_f54dbcae77ace8527a816665bf48383c.bindPopup(popup_cbe748f6da2ee4dbd35f90e0ad523623)
+        ;
+
+        
+    
+    
+            marker_f54dbcae77ace8527a816665bf48383c.bindTooltip(
+                `<div>
+                     Sector Niebla Frecuente (Riesgo: 3.9)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_f54dbcae77ace8527a816665bf48383c.setIcon(icon_86e3f2407fcc14288f141ddc2e64eda8);
+            
+    
+            var marker_0820809bd5bac7608109dca63e8057a4 = L.marker(
+                [6.188, -75.428],
+                {
+}
+            ).addTo(map_d9dbfa54295de6554696a7a9f4b9833a);
+        
+    
+            var icon_92edeb6708bf429975eda7dc35fe5c6c = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "exclamation-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_f4f4df92968746abc64d6a0183a46425 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_278e534852d7b684395355c94d2e5c69 = $(`<div id="html_278e534852d7b684395355c94d2e5c69" style="width: 100.0%; height: 100.0%;">                     <div style="font-family: Arial; width: 250px;">                         <h5 style="color: red;">Pendiente Pronunciada</h5>                         <p><b>Zona:</b> Las Palmas</p>                         <p><b>Nivel de Riesgo:</b> 3.8 / 4.0</p>                         <p style="font-size: 11px; color: #666;">Punto crítico identificado</p>                     </div>                 </div>`)[0];
+                popup_f4f4df92968746abc64d6a0183a46425.setContent(html_278e534852d7b684395355c94d2e5c69);
+            
+        
+
+        marker_0820809bd5bac7608109dca63e8057a4.bindPopup(popup_f4f4df92968746abc64d6a0183a46425)
+        ;
+
+        
+    
+    
+            marker_0820809bd5bac7608109dca63e8057a4.bindTooltip(
+                `<div>
+                     Pendiente Pronunciada (Riesgo: 3.8)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_0820809bd5bac7608109dca63e8057a4.setIcon(icon_92edeb6708bf429975eda7dc35fe5c6c);
+            
+    
+            var marker_cbab747bad1765cda98570ff261b19cc = L.marker(
+                [6.178, -75.418],
+                {
+}
+            ).addTo(map_d9dbfa54295de6554696a7a9f4b9833a);
+        
+    
+            var icon_796fd0362365ecfaae79d2490e9cb1f4 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "exclamation-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_097c90d6e9627179a091079312adacc4 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_0cc6b05209df9cd25a96d181c61f5e61 = $(`<div id="html_0cc6b05209df9cd25a96d181c61f5e61" style="width: 100.0%; height: 100.0%;">                     <div style="font-family: Arial; width: 250px;">                         <h5 style="color: red;">Zona Sin Iluminación</h5>                         <p><b>Zona:</b> Las Palmas</p>                         <p><b>Nivel de Riesgo:</b> 3.7 / 4.0</p>                         <p style="font-size: 11px; color: #666;">Punto crítico identificado</p>                     </div>                 </div>`)[0];
+                popup_097c90d6e9627179a091079312adacc4.setContent(html_0cc6b05209df9cd25a96d181c61f5e61);
+            
+        
+
+        marker_cbab747bad1765cda98570ff261b19cc.bindPopup(popup_097c90d6e9627179a091079312adacc4)
+        ;
+
+        
+    
+    
+            marker_cbab747bad1765cda98570ff261b19cc.bindTooltip(
+                `<div>
+                     Zona Sin Iluminación (Riesgo: 3.7)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_cbab747bad1765cda98570ff261b19cc.setIcon(icon_796fd0362365ecfaae79d2490e9cb1f4);
+            
+    
+            var marker_e49388afece4b0f6f67103f458859838 = L.marker(
+                [6.185, -75.425],
+                {
+}
+            ).addTo(map_d9dbfa54295de6554696a7a9f4b9833a);
+        
+    
+            var icon_8409ca7f0915b959fd71795e8a698b63 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "exclamation-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_2703bd11002685305962982c1e1f8255 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_85ff1afda333175f06538b194768e75c = $(`<div id="html_85ff1afda333175f06538b194768e75c" style="width: 100.0%; height: 100.0%;">                     <div style="font-family: Arial; width: 250px;">                         <h5 style="color: red;">Curva Cerrada Km 12</h5>                         <p><b>Zona:</b> Las Palmas</p>                         <p><b>Nivel de Riesgo:</b> 3.9 / 4.0</p>                         <p style="font-size: 11px; color: #666;">Punto crítico identificado</p>                     </div>                 </div>`)[0];
+                popup_2703bd11002685305962982c1e1f8255.setContent(html_85ff1afda333175f06538b194768e75c);
+            
+        
+
+        marker_e49388afece4b0f6f67103f458859838.bindPopup(popup_2703bd11002685305962982c1e1f8255)
+        ;
+
+        
+    
+    
+            marker_e49388afece4b0f6f67103f458859838.bindTooltip(
+                `<div>
+                     Curva Cerrada Km 12 (Riesgo: 3.9)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_e49388afece4b0f6f67103f458859838.setIcon(icon_8409ca7f0915b959fd71795e8a698b63);
+            
+    
+            var marker_85f33c1e5e1bf74c73d2b94872f2b52f = L.marker(
+                [6.162, -75.42],
+                {
+}
+            ).addTo(map_d9dbfa54295de6554696a7a9f4b9833a);
+        
+    
+            var icon_a11678476de23505caed43a1a1a19473 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "warning-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_eccbef1ce198201e086977a4b6499816 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_ad5df4f17241657111685b502fa0aac2 = $(`<div id="html_ad5df4f17241657111685b502fa0aac2" style="width: 100.0%; height: 100.0%;">                     <div style="font-family: Arial; width: 250px;">                         <h5 style="color: orange;">Intersección Principal Acceso</h5>                         <p><b>Zona:</b> Aeropuerto JMC</p>                         <p><b>Nivel de Riesgo:</b> 3.3 / 4.0</p>                         <p style="font-size: 11px; color: #666;">Punto crítico identificado</p>                     </div>                 </div>`)[0];
+                popup_eccbef1ce198201e086977a4b6499816.setContent(html_ad5df4f17241657111685b502fa0aac2);
+            
+        
+
+        marker_85f33c1e5e1bf74c73d2b94872f2b52f.bindPopup(popup_eccbef1ce198201e086977a4b6499816)
+        ;
+
+        
+    
+    
+            marker_85f33c1e5e1bf74c73d2b94872f2b52f.bindTooltip(
+                `<div>
+                     Intersección Principal Acceso (Riesgo: 3.3)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_85f33c1e5e1bf74c73d2b94872f2b52f.setIcon(icon_a11678476de23505caed43a1a1a19473);
+            
+    
+            var marker_a1b9790729e71b6fbd5628723a55809e = L.marker(
+                [6.166, -75.424],
+                {
+}
+            ).addTo(map_d9dbfa54295de6554696a7a9f4b9833a);
+        
+    
+            var icon_dd4b76de445e98f4dddeec0fe2407c8b = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "warning-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_e5dee7c5a42752c67ee2f317d6e3d65f = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_e5071b6b4ca2fc05f2192ab95553ffb8 = $(`<div id="html_e5071b6b4ca2fc05f2192ab95553ffb8" style="width: 100.0%; height: 100.0%;">                     <div style="font-family: Arial; width: 250px;">                         <h5 style="color: orange;">Rotonda Aeropuerto</h5>                         <p><b>Zona:</b> Aeropuerto JMC</p>                         <p><b>Nivel de Riesgo:</b> 3.2 / 4.0</p>                         <p style="font-size: 11px; color: #666;">Punto crítico identificado</p>                     </div>                 </div>`)[0];
+                popup_e5dee7c5a42752c67ee2f317d6e3d65f.setContent(html_e5071b6b4ca2fc05f2192ab95553ffb8);
+            
+        
+
+        marker_a1b9790729e71b6fbd5628723a55809e.bindPopup(popup_e5dee7c5a42752c67ee2f317d6e3d65f)
+        ;
+
+        
+    
+    
+            marker_a1b9790729e71b6fbd5628723a55809e.bindTooltip(
+                `<div>
+                     Rotonda Aeropuerto (Riesgo: 3.2)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_a1b9790729e71b6fbd5628723a55809e.setIcon(icon_dd4b76de445e98f4dddeec0fe2407c8b);
+            
+    
+            var marker_7e8c9b018375edaa1d0269206c18dd8f = L.marker(
+                [6.168, -75.426],
+                {
+}
+            ).addTo(map_d9dbfa54295de6554696a7a9f4b9833a);
+        
+    
+            var icon_30a3cf4aad67678588f15e91c433001d = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "warning-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_2dc339227738e6fcf7c6e98b55770c77 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_25057c783c5c5231781a9abb2c606b33 = $(`<div id="html_25057c783c5c5231781a9abb2c606b33" style="width: 100.0%; height: 100.0%;">                     <div style="font-family: Arial; width: 250px;">                         <h5 style="color: orange;">Zona Comercial Aeropuerto</h5>                         <p><b>Zona:</b> Aeropuerto JMC</p>                         <p><b>Nivel de Riesgo:</b> 2.9 / 4.0</p>                         <p style="font-size: 11px; color: #666;">Punto crítico identificado</p>                     </div>                 </div>`)[0];
+                popup_2dc339227738e6fcf7c6e98b55770c77.setContent(html_25057c783c5c5231781a9abb2c606b33);
+            
+        
+
+        marker_7e8c9b018375edaa1d0269206c18dd8f.bindPopup(popup_2dc339227738e6fcf7c6e98b55770c77)
+        ;
+
+        
+    
+    
+            marker_7e8c9b018375edaa1d0269206c18dd8f.bindTooltip(
+                `<div>
+                     Zona Comercial Aeropuerto (Riesgo: 2.9)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_7e8c9b018375edaa1d0269206c18dd8f.setIcon(icon_30a3cf4aad67678588f15e91c433001d);
+            
+    
+            var marker_c21029f5fcf4f42733412ef166457f49 = L.marker(
+                [6.164, -75.422],
+                {
+}
+            ).addTo(map_d9dbfa54295de6554696a7a9f4b9833a);
+        
+    
+            var icon_51b5de5dc4d5c4023b6d19b4dfa8811d = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "warning-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_6705ce6d8870fe9167ac3849aa0fea6b = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_6501d31899cbc3eeeeee19442cfdc3e8 = $(`<div id="html_6501d31899cbc3eeeeee19442cfdc3e8" style="width: 100.0%; height: 100.0%;">                     <div style="font-family: Arial; width: 250px;">                         <h5 style="color: orange;">Acceso Terminal</h5>                         <p><b>Zona:</b> Aeropuerto JMC</p>                         <p><b>Nivel de Riesgo:</b> 3.1 / 4.0</p>                         <p style="font-size: 11px; color: #666;">Punto crítico identificado</p>                     </div>                 </div>`)[0];
+                popup_6705ce6d8870fe9167ac3849aa0fea6b.setContent(html_6501d31899cbc3eeeeee19442cfdc3e8);
+            
+        
+
+        marker_c21029f5fcf4f42733412ef166457f49.bindPopup(popup_6705ce6d8870fe9167ac3849aa0fea6b)
+        ;
+
+        
+    
+    
+            marker_c21029f5fcf4f42733412ef166457f49.bindTooltip(
+                `<div>
+                     Acceso Terminal (Riesgo: 3.1)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_c21029f5fcf4f42733412ef166457f49.setIcon(icon_51b5de5dc4d5c4023b6d19b4dfa8811d);
+            
+    
+            var marker_2e985efe3a3ac399777db5c97d6855e1 = L.marker(
+                [6.153, -75.371],
+                {
+}
+            ).addTo(map_d9dbfa54295de6554696a7a9f4b9833a);
+        
+    
+            var icon_f61a0e5006eeb1f596cf121f9dff2ad0 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "warning-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_c5bc6383c966374378454314769a23b2 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_a70d14b56a23ed1614cbb2ec458123ed = $(`<div id="html_a70d14b56a23ed1614cbb2ec458123ed" style="width: 100.0%; height: 100.0%;">                     <div style="font-family: Arial; width: 250px;">                         <h5 style="color: orange;">Parque Principal</h5>                         <p><b>Zona:</b> Centro Urbano</p>                         <p><b>Nivel de Riesgo:</b> 2.5 / 4.0</p>                         <p style="font-size: 11px; color: #666;">Punto crítico identificado</p>                     </div>                 </div>`)[0];
+                popup_c5bc6383c966374378454314769a23b2.setContent(html_a70d14b56a23ed1614cbb2ec458123ed);
+            
+        
+
+        marker_2e985efe3a3ac399777db5c97d6855e1.bindPopup(popup_c5bc6383c966374378454314769a23b2)
+        ;
+
+        
+    
+    
+            marker_2e985efe3a3ac399777db5c97d6855e1.bindTooltip(
+                `<div>
+                     Parque Principal (Riesgo: 2.5)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_2e985efe3a3ac399777db5c97d6855e1.setIcon(icon_f61a0e5006eeb1f596cf121f9dff2ad0);
+            
+    
+            var marker_3d5785a75a97ee5871a6a0bec9692a87 = L.marker(
+                [6.156, -75.374],
+                {
+}
+            ).addTo(map_d9dbfa54295de6554696a7a9f4b9833a);
+        
+    
+            var icon_d9f34a8ca161ba77977ffe45f6d9b922 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "lightgreen",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_18bb778931448714c888cf5601f4ec9b = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_98bb52fd4fb1f4ff16b7bc9e70b3611a = $(`<div id="html_98bb52fd4fb1f4ff16b7bc9e70b3611a" style="width: 100.0%; height: 100.0%;">                     <div style="font-family: Arial; width: 250px;">                         <h5 style="color: lightgreen;">Zona Comercial Central</h5>                         <p><b>Zona:</b> Centro Urbano</p>                         <p><b>Nivel de Riesgo:</b> 2.4 / 4.0</p>                         <p style="font-size: 11px; color: #666;">Punto crítico identificado</p>                     </div>                 </div>`)[0];
+                popup_18bb778931448714c888cf5601f4ec9b.setContent(html_98bb52fd4fb1f4ff16b7bc9e70b3611a);
+            
+        
+
+        marker_3d5785a75a97ee5871a6a0bec9692a87.bindPopup(popup_18bb778931448714c888cf5601f4ec9b)
+        ;
+
+        
+    
+    
+            marker_3d5785a75a97ee5871a6a0bec9692a87.bindTooltip(
+                `<div>
+                     Zona Comercial Central (Riesgo: 2.4)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_3d5785a75a97ee5871a6a0bec9692a87.setIcon(icon_d9f34a8ca161ba77977ffe45f6d9b922);
+            
+    
+            var marker_4639ceb258fbb644702be640a226748c = L.marker(
+                [6.157, -75.375],
+                {
+}
+            ).addTo(map_d9dbfa54295de6554696a7a9f4b9833a);
+        
+    
+            var icon_5c341ea279132fa46533271ddaafb83c = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "lightgreen",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_f61300e96589ecc7eff222aab1bc29e5 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_d3fc47ebf71c441f52e17943119da702 = $(`<div id="html_d3fc47ebf71c441f52e17943119da702" style="width: 100.0%; height: 100.0%;">                     <div style="font-family: Arial; width: 250px;">                         <h5 style="color: lightgreen;">Zona de Entretenimiento</h5>                         <p><b>Zona:</b> Centro Urbano</p>                         <p><b>Nivel de Riesgo:</b> 2.3 / 4.0</p>                         <p style="font-size: 11px; color: #666;">Punto crítico identificado</p>                     </div>                 </div>`)[0];
+                popup_f61300e96589ecc7eff222aab1bc29e5.setContent(html_d3fc47ebf71c441f52e17943119da702);
+            
+        
+
+        marker_4639ceb258fbb644702be640a226748c.bindPopup(popup_f61300e96589ecc7eff222aab1bc29e5)
+        ;
+
+        
+    
+    
+            marker_4639ceb258fbb644702be640a226748c.bindTooltip(
+                `<div>
+                     Zona de Entretenimiento (Riesgo: 2.3)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_4639ceb258fbb644702be640a226748c.setIcon(icon_5c341ea279132fa46533271ddaafb83c);
+            
+    
+            var marker_7731d2262aa2f015885ce47b80873edd = L.marker(
+                [6.154, -75.372],
+                {
+}
+            ).addTo(map_d9dbfa54295de6554696a7a9f4b9833a);
+        
+    
+            var icon_5c3b9651a207f3eda88ab874ff94b932 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "warning-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_b745b3cc1502c82157541d306f11021e = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_fb9243af9d916b5d9107493c02facd94 = $(`<div id="html_fb9243af9d916b5d9107493c02facd94" style="width: 100.0%; height: 100.0%;">                     <div style="font-family: Arial; width: 250px;">                         <h5 style="color: orange;">Zona Escolar</h5>                         <p><b>Zona:</b> Centro Urbano</p>                         <p><b>Nivel de Riesgo:</b> 2.6 / 4.0</p>                         <p style="font-size: 11px; color: #666;">Punto crítico identificado</p>                     </div>                 </div>`)[0];
+                popup_b745b3cc1502c82157541d306f11021e.setContent(html_fb9243af9d916b5d9107493c02facd94);
+            
+        
+
+        marker_7731d2262aa2f015885ce47b80873edd.bindPopup(popup_b745b3cc1502c82157541d306f11021e)
+        ;
+
+        
+    
+    
+            marker_7731d2262aa2f015885ce47b80873edd.bindTooltip(
+                `<div>
+                     Zona Escolar (Riesgo: 2.6)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_7731d2262aa2f015885ce47b80873edd.setIcon(icon_5c3b9651a207f3eda88ab874ff94b932);
+            
+    
+            var heat_map_c349a9f4d9a8b98883708116d5ce7e8f = L.heatLayer(
+                [[6.15, -75.375, 2.5], [6.148, -75.373, 3.0], [6.151, -75.376, 2.8], [6.152, -75.377, 2.5], [6.15238011986821, -75.36512702067738, 2.0], [6.149641307227061, -75.37844888734341, 2.0], [6.1421216792896836, -75.37985613050549, 2.0], [6.157440461424907, -75.3726901292955, 2.0], [6.14666795397293, -75.3688344299094, 2.0], [6.145329530445574, -75.37391799592915, 2.0], [6.1437777925305825, -75.36957791655936, 2.0], [6.152398818911568, -75.3729303298916, 2.0], [6.156795153373677, -75.37038676823686, 2.0], [6.1478946863264055, -75.37020977618623, 2.0], [6.145415511678884, -75.38290891806332, 2.0], [6.141775628079045, -75.38420220342843, 2.0], [6.145, -75.365, 2.0], [6.143, -75.363, 2.5], [6.146, -75.366, 2.4], [6.147, -75.367, 1.8], [6.149586038483231, -75.3590121238919, 1.6], [6.137418353923227, -75.37103627049588, 1.6], [6.153575750785612, -75.36738932540638, 1.6], [6.142473450103041, -75.36693870147906, 1.6], [6.153963974866991, -75.36359909731439, 1.6], [6.148752335799816, -75.3553302956185, 1.6], [6.154127844550012, -75.37040340596307, 1.6], [6.146533173879289, -75.36603449281067, 1.6], [6.144151512238625, -75.36548462436318, 1.6], [6.145708890303151, -75.37120102890094, 1.6], [6.18, -75.42, 3.8], [6.175, -75.415, 4.0], [6.182, -75.422, 3.9], [6.188, -75.428, 3.8], [6.178, -75.418, 3.7], [6.185, -75.425, 3.9], [6.1849547907987255, -75.42401329200969, 3.04], [6.1817936478649145, -75.41778070053918, 3.04], [6.180914548282102, -75.41467762521677, 3.04], [6.186472598872227, -75.4105341991603, 3.04], [6.177789660816757, -75.41366475882319, 3.04], [6.186191616124494, -75.41074138443592, 3.04], [6.1745985621664605, -75.42240127463663, 3.04], [6.175658748324289, -75.41654178312213, 3.04], [6.187230978592523, -75.42681262031121, 3.04], [6.172087249644124, -75.42817551118209, 3.04], [6.175350913730145, -75.42818376879876, 3.04], [6.179439148722226, -75.42481292647314, 3.04], [6.187322848195871, -75.41270790632912, 3.04], [6.177326462613826, -75.41333740309499, 3.04], [6.179628773400572, -75.41754877356591, 3.04], [6.185542599142532, -75.4114919254387, 3.04], [6.1805397247297, -75.41606045185073, 3.04], [6.174066045874073, -75.42139165960647, 3.04], [6.175934820925447, -75.41219833302374, 3.04], [6.165, -75.423, 3.0], [6.162, -75.42, 3.3], [6.166, -75.424, 3.2], [6.168, -75.426, 2.9], [6.164, -75.422, 3.1], [6.169417239828532, -75.41477916255403, 2.4000000000000004], [6.155567595522337, -75.41335425892811, 2.4000000000000004], [6.165315308287783, -75.4137824408966, 2.4000000000000004], [6.174415625445896, -75.41918968490438, 2.4000000000000004], [6.160723992404421, -75.41968211314021, 2.4000000000000004], [6.158135223801715, -75.42112322400219, 2.4000000000000004], [6.173986365402114, -75.4171072671241, 2.4000000000000004], [6.156491381066531, -75.41309228859679, 2.4000000000000004], [6.166328227457657, -75.43044165504419, 2.4000000000000004], [6.157719842111028, -75.42747087366057, 2.4000000000000004], [6.156543314655851, -75.4254582386392, 2.4000000000000004], [6.169313091221958, -75.4246425308325, 2.4000000000000004], [6.171865968119196, -75.42928394299147, 2.4000000000000004], [6.157205958883304, -75.42811494143619, 2.4000000000000004], [6.16788875623517, -75.4321333003451, 2.4000000000000004], [6.155, -75.373, 2.2], [6.153, -75.371, 2.5], [6.156, -75.374, 2.4], [6.157, -75.375, 2.3], [6.154, -75.372, 2.6], [6.151533234295374, -75.36749948708997, 1.7600000000000002], [6.152058425170617, -75.38195556362109, 1.7600000000000002], [6.148383483109756, -75.36718259016425, 1.7600000000000002], [6.163531662976097, -75.3632784420982, 1.7600000000000002], [6.148111993982656, -75.36404254517244, 1.7600000000000002], [6.157612665037806, -75.37716193823775, 1.7600000000000002], [6.159783816565845, -75.37386640242721, 1.7600000000000002], [6.156036215386784, -75.37358276528151, 1.7600000000000002], [6.1450050179976685, -75.37340436543715, 1.7600000000000002], [6.148095448998905, -75.36664715118525, 1.7600000000000002], [6.160144801664575, -75.37766727991675, 1.7600000000000002]],
+                {
+  "minOpacity": 0.3,
+  "maxZoom": 18,
+  "radius": 25,
+  "blur": 20,
+  "gradient": {
+  0.0: "green",
+  0.3: "yellow",
+  0.5: "orange",
+  0.7: "red",
+  1.0: "darkred",
+},
+  "maxOpacity": 0.8,
+}
+            );
+        
+    
+            heat_map_c349a9f4d9a8b98883708116d5ce7e8f.addTo(map_d9dbfa54295de6554696a7a9f4b9833a);
+        
+    
+            var layer_control_3297db6deaf0e2fa76b825bf45225c70_layers = {
+                base_layers : {
+                    "openstreetmap" : tile_layer_3b652c0764d0c9a98acc5cc098c0deba,
+                    "CartoDB Positron" : tile_layer_05bb34d5e1b1b8571aae47fdefa7491f,
+                    "CartoDB Dark" : tile_layer_e05ddca41b0442db107462bf5716d38b,
+                },
+                overlays :  {
+                    "Mapa de Calor de Riesgo" : heat_map_c349a9f4d9a8b98883708116d5ce7e8f,
+                },
+            };
+            let layer_control_3297db6deaf0e2fa76b825bf45225c70 = L.control.layers(
+                layer_control_3297db6deaf0e2fa76b825bf45225c70_layers.base_layers,
+                layer_control_3297db6deaf0e2fa76b825bf45225c70_layers.overlays,
+                {
+  "position": "topright",
+  "collapsed": true,
+  "autoZIndex": true,
+}
+            ).addTo(map_d9dbfa54295de6554696a7a9f4b9833a);
+
+        
+</script>
+</html>
